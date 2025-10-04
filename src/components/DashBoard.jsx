@@ -40,7 +40,7 @@ export default function DashBoard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-6">
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl border border-gray-200">
-        {/* Header */}
+        
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-extrabold text-gray-800">
             Dashboard
@@ -58,7 +58,7 @@ export default function DashBoard() {
 
         {user ? (
           <div className="space-y-6">
-            {/* User Info */}
+            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
                 <span className="block text-gray-500 text-sm font-medium">Name</span>
@@ -80,7 +80,7 @@ export default function DashBoard() {
               </div>
             </div>
 
-            {/* Rental Statistics */}
+            
             {stats && (
               <div className="bg-gray-50 p-6 rounded-xl shadow-inner">
                 <h2 className="text-xl font-semibold text-gray-700 mb-4">
@@ -106,7 +106,7 @@ export default function DashBoard() {
           <p className="text-center text-gray-500">Loading user data...</p>
         )}
 
-        {/* Footer Links */}
+        
         <div className="mt-8 text-center">
           <Link
             to="/cars"

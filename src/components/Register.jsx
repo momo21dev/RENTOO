@@ -47,7 +47,7 @@ export default function Register() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-600 to-black p-4">
 
-      {/* Header */}
+      
       <div className="mb-10 text-center">
         <Link to={'/'}>
           <h1 className="text-4xl font-extrabold text-yellow-600">RENTOO</h1>
@@ -65,7 +65,7 @@ export default function Register() {
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         {success && <p className="text-green-500 text-center mb-4">{success}</p>}
 
-        {/* First Name */}
+        
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-white">First Name</label>
           <input
@@ -77,7 +77,7 @@ export default function Register() {
           />
         </div>
 
-        {/* Last Name */}
+        
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-white">Last Name</label>
           <input
@@ -89,7 +89,7 @@ export default function Register() {
           />
         </div>
 
-        {/* Email */}
+        
         <div className="mb-4">
           <label className="block mb-2 font-semibold text-white">Email</label>
           <input
@@ -101,7 +101,7 @@ export default function Register() {
           />
         </div>
 
-        {/* Password */}
+        
         <div className="mb-6">
           <label className="block mb-2 font-semibold text-white">Password</label>
           <input
@@ -113,7 +113,7 @@ export default function Register() {
           />
         </div>
 
-        {/* Register Button */}
+       
         <button
           type="submit"
           className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 rounded-lg transition shadow-md"
@@ -121,7 +121,7 @@ export default function Register() {
           Register
         </button>
 
-        {/* Login Button */}
+       
         <button
           type="button"
           onClick={() => navigate("/login")}

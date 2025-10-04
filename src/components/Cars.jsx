@@ -28,7 +28,7 @@ export default function Cars() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
+      
       <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
           <h1 className="text-2xl font-extrabold text-yellow-500 tracking-wide">
@@ -54,7 +54,7 @@ export default function Cars() {
         </div>
       </nav>
 
-      {/* Cars */}
+     
       <div className="p-8">
         <h2 className="text-4xl font-bold mb-10 text-center text-gray-800">
            Available Cars

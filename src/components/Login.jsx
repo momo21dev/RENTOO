@@ -45,7 +45,7 @@ export default function Login() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-600 to-black p-4">
 
-            {/* Header */}
+            
             <div className="mb-10 text-center">
                 <Link to={'/'}>
                     <h1 className="text-4xl font-extrabold text-yellow-600">RENTOO</h1>
@@ -54,7 +54,7 @@ export default function Login() {
                 <p className="text-white mt-2">Login to manage your cars & rentals</p>
             </div>
 
-            {/* Form */}
+            
             <form
                 onSubmit={handleLogin}
                 className="bg-black shadow-2xl rounded-2xl p-8 w-full max-w-md border border-gray-100"
@@ -93,7 +93,7 @@ export default function Login() {
                     Login
                 </button>
 
-                {/* زرار Register */}
+                
                 <button
                     type="button"
                     onClick={() => navigate("/register")}
