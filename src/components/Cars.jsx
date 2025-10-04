@@ -41,7 +41,7 @@ export default function Cars() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
-      {/* 🔹 Navbar */}
+      
       <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
           <h1 className="text-3xl font-extrabold text-white tracking-wide">
@@ -75,13 +75,13 @@ export default function Cars() {
         </div>
       </nav>
 
-      {/* 🔹 Main Content */}
+      
       <div className="flex-grow p-4 sm:p-8">
         <h2 className="text-4xl font-extrabold mb-10 text-center text-white drop-shadow-lg">
            Available Cars 
         </h2>
 
-        {/* 🔹 Grid */}
+       
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {data.map((car) => (
             <div
@@ -131,7 +131,7 @@ export default function Cars() {
           ))}
         </div>
 
-        {/* 🔹 لو مفيش عربيات */}
+        
         {data.length === 0 && (
           <p className="text-center text-gray-400 mt-10 text-lg">
             No cars available at the moment 

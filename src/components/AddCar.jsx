@@ -48,7 +48,7 @@ export default function AddCar() {
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col items-center">
-            {/* 🔹 Navbar */}
+            
             <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center w-full sticky top-0 z-50">
                 <Link to={"/cars"}>
                     <h1 className="text-3xl font-extrabold text-white tracking-wide">
@@ -57,7 +57,7 @@ export default function AddCar() {
                 </Link>
             </nav>
 
-            {/* 🔹 Form Container */}
+            
             <div className="w-full max-w-lg mt-10 p-8 bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg">
                 <h2 className="text-3xl font-bold text-center text-white mb-6">
                     Add New Car
@@ -132,7 +132,7 @@ export default function AddCar() {
                 </form>
             </div>
 
-            {/* 🔹 Back to Cars Button */}
+            
             <div className="mt-8 mb-10">
                 <Link
                     to="/cars"

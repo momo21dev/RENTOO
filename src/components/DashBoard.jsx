@@ -29,7 +29,7 @@ export default function DashBoard() {
         { month: "june", count: 6 },
       ],
     };
-    setTimeout(() => setStats(fakeData), 500); // simulate small delay
+    setTimeout(() => setStats(fakeData), 500); 
   }, []);
 
   const handleLogOut = async () => {
@@ -39,7 +39,7 @@ export default function DashBoard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
-      {/* 🔹 Navbar */}
+      
       <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
           <h1 className="text-3xl font-extrabold text-white tracking-wide">
@@ -65,7 +65,7 @@ export default function DashBoard() {
         </div>
       </nav>
 
-      {/* 🔹 Dashboard Content */}
+      
       <div className="flex-grow p-6 sm:p-10 text-white">
         <h2 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg">
           Dashboard Overview
@@ -104,7 +104,7 @@ export default function DashBoard() {
           <p className="text-center text-gray-400">Loading user data...</p>
         )}
 
-        {/* 🔹 Chart Section */}
+       
         {!stats ? (
           <p className="text-center text-gray-400 mt-10">Loading stats...</p>
         ) : (
@@ -139,7 +139,7 @@ export default function DashBoard() {
           )
         )}
 
-        {/* 🔹 Browse Cars Button */}
+        
         <div className="mt-10 text-center">
           <Link
             to="/cars"
