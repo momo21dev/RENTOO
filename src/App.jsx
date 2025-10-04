@@ -8,6 +8,7 @@ import Cars from "./components/Cars";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect } from "react";
 import useUserStore from "./others/ZuStand";
+import AddCar from "./components/AddCar";
 
 export const supabase = createClient(
   "https://evzfqbruihjjlysizzxg.supabase.co",
@@ -16,7 +17,7 @@ export const supabase = createClient(
 
 function App() {
   const setUser = useUserStore((state) => state.setUser);
-//fetch session//
+  //fetch session//
   async function getSession() {
     const { data: { session } } = await supabase.auth.getSession();
     if (session) {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/cars" element={<Cars />} />
+        <Route path="/addcar" element={<AddCar />} />
       </Routes>
     </BrowserRouter>
   );

@@ -8,7 +8,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  CartesianGrid
+  CartesianGrid,
 } from "recharts";
 import { supabase } from "../App";
 
@@ -18,18 +18,18 @@ export default function DashBoard() {
   const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    // Fake data (replace later with real DB query)
     const fakeData = {
-      totalRents: 12,
+      totalRents: 14,
       monthlyRents: [
         { month: "Jan", count: 2 },
         { month: "Feb", count: 1 },
         { month: "Mar", count: 3 },
         { month: "Apr", count: 2 },
         { month: "May", count: 4 },
+        { month: "june", count: 6 },
       ],
     };
-    setStats(fakeData);
+    setTimeout(() => setStats(fakeData), 500); // simulate small delay
   }, []);
 
   const handleLogOut = async () => {
@@ -38,79 +38,112 @@ export default function DashBoard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center p-6">
-      <div className="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-3xl border border-gray-200">
-        
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-extrabold text-gray-800">
-            Dashboard
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
+      {/* 🔹 Navbar */}
+      <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
+        <Link to={"/cars"}>
+          <h1 className="text-3xl font-extrabold text-white tracking-wide">
+            RENTOO
           </h1>
-          <Link to={'/login'}>
+        </Link>
+
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 sm:mt-0">
+          <Link to="/dashboard">
+            <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
+              {user ? `${user.first_name}` : "Guest"}
+            </div>
+          </Link>
+
+          <Link to={"/login"}>
             <button
               onClick={handleLogOut}
-              className="bg-gradient-to-r from-red-600 to-red-800 text-white font-semibold px-5 py-2 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+              className="bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:scale-105 transition duration-300"
             >
               LOGOUT
             </button>
           </Link>
-
         </div>
+      </nav>
+
+      {/* 🔹 Dashboard Content */}
+      <div className="flex-grow p-6 sm:p-10 text-white">
+        <h2 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg">
+          Dashboard Overview
+        </h2>
 
         {user ? (
-          <div className="space-y-6">
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
-                <span className="block text-gray-500 text-sm font-medium">Name</span>
-                <span className="text-gray-800 font-semibold">
-                  {user.first_name} {user.last_name}
-                </span>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
-                <span className="block text-gray-500 text-sm font-medium">Email</span>
-                <span className="text-gray-800 font-semibold">{user.email}</span>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
-                <span className="block text-gray-500 text-sm font-medium">Role</span>
-                <span className="text-gray-800 font-semibold">{user.role}</span>
-              </div>
-              <div className="bg-gray-50 p-4 rounded-xl shadow-inner">
-                <span className="block text-gray-500 text-sm font-medium">Total Rents</span>
-                <span className="text-yellow-500 font-bold text-lg">{stats?.totalRents ?? 0}</span>
-              </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
+            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
+              <p className="text-gray-300 text-sm">Name</p>
+              <p className="text-xl font-bold text-white mt-1">
+                {user.first_name} {user.last_name}
+              </p>
             </div>
 
-            
-            {stats && (
-              <div className="bg-gray-50 p-6 rounded-xl shadow-inner">
-                <h2 className="text-xl font-semibold text-gray-700 mb-4">
-                  Rental Statistics
-                </h2>
-                <div className="h-64">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={stats.monthlyRents}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
-                      <XAxis dataKey="month" stroke="#374151" />
-                      <YAxis stroke="#374151" />
-                      <Tooltip
-                        contentStyle={{ backgroundColor: "#fff", borderRadius: "8px" }}
-                      />
-                      <Bar dataKey="count" fill="#fbbf24" radius={[8, 8, 0, 0]} />
-                    </BarChart>
-                  </ResponsiveContainer>
-                </div>
-              </div>
-            )}
+            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
+              <p className="text-gray-300 text-sm">Email</p>
+              <p className="text-xl font-bold text-white mt-1 break-all ">
+                {user.email}
+              </p>
+            </div>
+
+
+            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
+              <p className="text-gray-300 text-sm">Role</p>
+              <p className="text-xl font-bold text-white mt-1">{user.role}</p>
+            </div>
+
+            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
+              <p className="text-gray-300 text-sm">Total Rents</p>
+              <p className="text-white text-2xl font-bold mt-1">
+                {stats?.totalRents ?? 0}
+              </p>
+            </div>
           </div>
         ) : (
-          <p className="text-center text-gray-500">Loading user data...</p>
+          <p className="text-center text-gray-400">Loading user data...</p>
         )}
 
-        
-        <div className="mt-8 text-center">
+        {/* 🔹 Chart Section */}
+        {!stats ? (
+          <p className="text-center text-gray-400 mt-10">Loading stats...</p>
+        ) : (
+          stats?.monthlyRents && (
+            <div className="bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg p-8">
+              <h3 className="text-2xl font-semibold mb-6 text-center">
+                Rental Statistics
+              </h3>
+              <div className="h-72">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={stats.monthlyRents}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
+                    <XAxis dataKey="month" stroke="#d1d5db" />
+                    <YAxis stroke="#d1d5db" />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: "#111827",
+                        borderRadius: "8px",
+                        color: "#fff",
+                        border: "1px solid #374151",
+                      }}
+                    />
+                    <Bar
+                      dataKey="count"
+                      fill="#ffffff"
+                      radius={[8, 8, 0, 0]}
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </div>
+          )
+        )}
+
+        {/* 🔹 Browse Cars Button */}
+        <div className="mt-10 text-center">
           <Link
             to="/cars"
-            className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-3 px-8 rounded-lg shadow-md transition"
+            className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold py-3 px-10 rounded-full shadow hover:scale-105 transition duration-300"
           >
             Browse Cars
           </Link>
