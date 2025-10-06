@@ -11,36 +11,45 @@ export default function Login() {
     const navigate = useNavigate();
     const setUser = useUserStore((state) => state.setUser);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        setError("");
-        setSuccess("");
+   const handleLogin = async (e) => {
+  e.preventDefault();
+  setError("");
+  setSuccess("");
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password,
-        });
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email,
+    password: password,
+  });
 
-        if (error) {
-            setError(error.message);
-        } else if (data.session) {
-            const userId = data.session.user.id;
-            const { data: userData, error } = await supabase
-                .from("users")
-                .select("*")
-                .eq("id", userId)
-                .single();
+  if (error) {
+    setError(error.message);
+  } else if (data.session) {
+    const userId = data.session.user.id;
 
-            if (error) {
-                setError(error.message);
-            } else {
-                setUser(userData);
-                setSuccess("DONE");
-                navigate("/dashboard");
-                console.log(data.session.user)
-            }
-        }
-    };
+    const { data: userData, error: fetchError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (fetchError) {
+      setError(fetchError.message);
+    } else {
+      setUser({
+        id: userData.id,
+        firstName: userData.first_name,
+        lastName: userData.last_name,
+        role: userData.role,
+        email: userData.email,
+      });
+
+      setSuccess("DONE");
+      console.log("Logged in user:", userData);
+      navigate("/dashboard");
+    }
+  }
+};
+
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-600 to-black p-4">

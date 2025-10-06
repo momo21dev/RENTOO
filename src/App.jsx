@@ -9,6 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { useEffect } from "react";
 import useUserStore from "./others/ZuStand";
 import AddCar from "./components/AddCar";
+import Confirmation from "./components/Confirmation";
 
 export const supabase = createClient(
   "https://evzfqbruihjjlysizzxg.supabase.co",
@@ -47,6 +48,7 @@ function App() {
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/cars" element={<Cars />} />
         <Route path="/addcar" element={<AddCar />} />
+        <Route path="/confirmation" element={<Confirmation />} />
       </Routes>
     </BrowserRouter>
   );

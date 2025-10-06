@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../App";
 import useUserStore from "../others/ZuStand";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import useCarIdStore from "../others/CarId";
 
 export default function Cars() {
   const [data, setData] = useState([]);
   const user = useUserStore((state) => state.user);
   const logOut = useUserStore((state) => state.logOut);
+  const { setCarId } = useCarIdStore()
+  const navigate = useNavigate()
 
   const fetchData = async () => {
     const { data, error } = await supabase.from("cars").select("*");
@@ -36,12 +39,18 @@ export default function Cars() {
       setData((prev) => prev.filter((car) => car.id !== id));
     }
   };
+  const handleRent = (id) => {
+    setCarId(id)
+    navigate('/confirmation')
+  }
+  
 
   const isAdmin = user?.role === "ADMIN";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
-      
+
+
       <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
           <h1 className="text-3xl font-extrabold text-white tracking-wide">
@@ -52,7 +61,7 @@ export default function Cars() {
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 sm:mt-0">
           <Link to="/dashboard">
             <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
-              {user ? `${user.first_name}` : "Guest"}
+              {user ? `${user.firstName}` : "Guest"}
             </div>
           </Link>
 
@@ -75,13 +84,13 @@ export default function Cars() {
         </div>
       </nav>
 
-      
+
       <div className="flex-grow p-4 sm:p-8">
         <h2 className="text-4xl font-extrabold mb-10 text-center text-white drop-shadow-lg">
-           Available Cars 
+          Available Cars
         </h2>
 
-       
+
         <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {data.map((car) => (
             <div
@@ -113,7 +122,9 @@ export default function Cars() {
                   </p>
 
                   <div className="flex gap-2">
-                    <button className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300">
+                    <button
+                      onClick={() => handleRent(car.id)}
+                      className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300">
                       RENT
                     </button>
                     {isAdmin && (
@@ -131,10 +142,10 @@ export default function Cars() {
           ))}
         </div>
 
-        
+
         {data.length === 0 && (
           <p className="text-center text-gray-400 mt-10 text-lg">
-            No cars available at the moment 
+            No cars available at the moment
           </p>
         )}
       </div>
