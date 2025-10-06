@@ -54,9 +54,9 @@ export default function Confirmation() {
 
     if (error) {
       console.log("Error inserting rental:", error);
-      alert("❌ حصل خطأ أثناء تسجيل الإيجار");
+      alert("❌ error while confirm the ");
     } else {
-      alert("✅ تم تأكيد الإيجار بنجاح!");
+      alert("✅ confirmed");
       setStartDate("");
       setEndDate("");
     }
@@ -66,7 +66,7 @@ export default function Confirmation() {
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex items-center justify-center p-6">
       <div className="bg-gray-800 p-8 rounded-2xl shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
-          تأكيد إيجار العربية
+         confirm car rental
         </h1>
 
         {car ? (
@@ -75,12 +75,12 @@ export default function Confirmation() {
               <span className="font-bold text-white">{car.brand} {car.model}</span> ({car.year})
             </p>
             <p className="text-center text-blue-400 font-semibold mb-6">
-              السعر اليومي: ${car.price_day}
+              Daily Price ${car.price_day}
             </p>
 
             <form onSubmit={handleConfirm} className="space-y-4">
               <div>
-                <label className="block text-gray-300 mb-2">تاريخ البداية</label>
+                <label className="block text-gray-300 mb-2">start date</label>
                 <input
                   type="date"
                   className="w-full p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -90,7 +90,7 @@ export default function Confirmation() {
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">تاريخ النهاية</label>
+                <label className="block text-gray-300 mb-2">end date</label>
                 <input
                   type="date"
                   className="w-full p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -101,7 +101,7 @@ export default function Confirmation() {
 
               {totalPrice > 0 && (
                 <p className="text-center text-green-400 font-bold">
-                  السعر الكلي: ${totalPrice}
+                  total price: ${totalPrice}
                 </p>
               )}
 
@@ -109,7 +109,7 @@ export default function Confirmation() {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300"
               >
-                تأكيد الإيجار
+               confirm
               </button>
             </form>
           </>
