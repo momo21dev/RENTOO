@@ -11,50 +11,46 @@ export default function Login() {
     const navigate = useNavigate();
     const setUser = useUserStore((state) => state.setUser);
 
-   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError("");
-  setSuccess("");
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password,
-  });
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        });
 
-  if (error) {
-    setError(error.message);
-  } else if (data.session) {
-    const userId = data.session.user.id;
+        if (error) {
+            setError(error.message);
+        } else if (data.session) {
+            const userId = data.session.user.id;
 
-    const { data: userData, error: fetchError } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", userId)
-      .single();
+            const { data: userData, error: fetchError } = await supabase
+                .from("users")
+                .select("*")
+                .eq("id", userId)
+                .single();
+            console.log(data)
+            if (fetchError) {
+                setError(fetchError.message);
+            } else {
+                console.log(userData)
+                setUser(userData);
 
-    if (fetchError) {
-      setError(fetchError.message);
-    } else {
-      setUser({
-        id: userData.id,
-        firstName: userData.first_name,
-        lastName: userData.last_name,
-        role: userData.role,
-        email: userData.email,
-      });
-
-      setSuccess("DONE");
-      console.log("Logged in user:", userData);
-      navigate("/dashboard");
-    }
-  }
-};
+                setSuccess("DONE");
+                console.log("Logged in user:", userData);
+                console.log()
+                navigate("/dashboard");
+            }
+        }
+    };
 
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-600 to-black p-4">
 
-            
+
             <div className="mb-10 text-center">
                 <Link to={'/'}>
                     <h1 className="text-4xl font-extrabold text-yellow-600">RENTOO</h1>
@@ -63,7 +59,7 @@ export default function Login() {
                 <p className="text-white mt-2">Login to manage your cars & rentals</p>
             </div>
 
-            
+
             <form
                 onSubmit={handleLogin}
                 className="bg-black shadow-2xl rounded-2xl p-8 w-full max-w-md border border-gray-100"
@@ -102,7 +98,7 @@ export default function Login() {
                     Login
                 </button>
 
-                
+
                 <button
                     type="button"
                     onClick={() => navigate("/register")}

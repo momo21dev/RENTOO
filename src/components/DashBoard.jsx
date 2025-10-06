@@ -67,9 +67,7 @@ export default function DashBoard() {
 
     fetchStats();
   }, [user]);
-  useEffect(() => {
-    console.log(stats)
-  }, [])
+ 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
       <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">

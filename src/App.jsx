@@ -30,7 +30,7 @@ function App() {
       if (error) {
         console.log(error.message)
       } else {
-        setUser(userData)
+        setUser(userData);
       }
     }
   }
