@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../App";
 import useUserStore from "../others/ZuStand";
 import useCarIdStore from "../others/CarId";
+import { Link, useNavigate } from "react-router";
 
 export default function Confirmation() {
   const { carId } = useCarIdStore();
@@ -11,6 +12,7 @@ export default function Confirmation() {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate()
 
   // 🟢 نجيب بيانات العربية المختارة
   useEffect(() => {
@@ -59,6 +61,7 @@ export default function Confirmation() {
       alert("✅ confirmed");
       setStartDate("");
       setEndDate("");
+      navigate('/cars')
     }
   };
 
@@ -66,7 +69,7 @@ export default function Confirmation() {
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex items-center justify-center p-6">
       <div className="bg-gray-800 p-8 rounded-2xl shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
-         confirm car rental
+          confirm car rental
         </h1>
 
         {car ? (
@@ -109,8 +112,10 @@ export default function Confirmation() {
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300"
               >
-               confirm
+                confirm
               </button>
+
+
             </form>
           </>
         ) : (

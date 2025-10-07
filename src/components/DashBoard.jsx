@@ -1,75 +1,59 @@
 import { useEffect, useState } from "react";
 import useUserStore from "../others/ZuStand";
-import { Link } from "react-router";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  CartesianGrid,
-} from "recharts";
+import { Link, useNavigate } from "react-router";
 import { supabase } from "../App";
 
 export default function DashBoard() {
   const user = useUserStore((state) => state.user);
   const logOut = useUserStore((state) => state.logOut);
-  const [stats, setStats] = useState(null);
+  const [rentals, setRentals] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const handleLogOut = async () => {
-    logOut();
     await supabase.auth.signOut();
+    logOut();
+    navigate("/login");
   };
 
-  // 🧠 Fetch rentals for this user
+  async function fetchRentals() {
+    if (!user?.id) return;
+
+    const { data, error } = await supabase
+      .from("rentals")
+      .select(`
+        id,
+        start_date,
+        end_date,
+        total_price,
+        cars (
+          id,
+          brand,
+          model,
+          year,
+          price_day,
+          image,
+          description
+        )
+      `)
+      .eq("user_id", user.id)
+      .order("start_date", { ascending: false });
+
+    if (error) {
+      console.error("Error fetching rentals:", error.message);
+    } else {
+      setRentals(data);
+    }
+    setLoading(false);
+  }
+
   useEffect(() => {
-    console.log(user)
-    const fetchStats = async () => {
-      if (!user || !user.id) {
-        return;
-      }
-
-     
-
-      const { data, error } = await supabase
-        .from("rentals")
-        .select("*")
-        .eq("user_id", user.id);
-
-      if (error) {
-        console.error("Error fetching rentals:", error.message);
-        return;
-      }
-
-      // لو مفيش بيانات
-      if (!data || data.length === 0) {
-        setStats({ totalRents: 0, monthlyRents: [] });
-        return;
-      }
-
-      const totalRents = data.length;
-
-      const monthlyMap = {};
-      data.forEach((rental) => {
-        const date = new Date(rental.start_date);
-        const month = date.toLocaleString("default", { month: "short" });
-        monthlyMap[month] = (monthlyMap[month] || 0) + 1;
-      });
-
-      const monthlyRents = Object.entries(monthlyMap).map(([month, count]) => ({
-        month,
-        count,
-      }));
-
-      setStats({ totalRents, monthlyRents });
-    };
-
-    fetchStats();
+    fetchRentals();
   }, [user]);
- 
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
+      {/* 🔝 Navbar */}
       <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
           <h1 className="text-3xl font-extrabold text-white tracking-wide">
@@ -78,11 +62,9 @@ export default function DashBoard() {
         </Link>
 
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 sm:mt-0">
-          <Link to="/dashboard">
-            <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
-              {user ? `${user.firstName}` : "Guest"}
-            </div>
-          </Link>
+          <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
+            {user ? `${user.firstName}` : "Guest"}
+          </div>
 
           <Link to={"/login"}>
             <button
@@ -95,81 +77,80 @@ export default function DashBoard() {
         </div>
       </nav>
 
-      <div className="flex-grow p-6 sm:p-10 text-white">
-        <h2 className="text-4xl font-extrabold mb-10 text-center drop-shadow-lg">
-          Dashboard Overview
+      {/* 🧑 User Info */}
+      <div className="bg-gradient-to-b from-gray-800 to-gray-700 shadow-lg rounded-2xl p-8 max-w-lg mx-auto mt-10 text-center text-white">
+        <h1 className="text-3xl font-extrabold mb-2">
+          Welcome, {user?.firstName} {user?.lastName}
+        </h1>
+        <p className="text-gray-300 mb-1">{user?.email}</p>
+        <p className="text-gray-400 font-semibold">
+          Role:{" "}
+          <span className="text-blue-400">{user?.role || "User"}</span>
+        </p>
+      </div>
+
+      {/* 🚗 Rentals Section */}
+      <div className="flex-grow p-4 sm:p-8">
+        <h2 className="text-4xl font-extrabold mb-10 text-center text-white drop-shadow-lg">
+          Your Rentals
         </h2>
 
-        {user ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-10">
-            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-              <p className="text-gray-300 text-sm">Name</p>
-              <p className="text-xl font-bold text-white mt-1">
-                {user.firstName} {user.lastName}
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-              <p className="text-gray-300 text-sm">Email</p>
-              <p className="text-xl font-bold text-white mt-1 break-all">
-                {user.email}
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-              <p className="text-gray-300 text-sm">Role</p>
-              <p className="text-xl font-bold text-white mt-1">{user.role}</p>
-            </div>
-
-            <div className="bg-gradient-to-b from-gray-800 to-gray-700 p-6 rounded-2xl shadow-lg hover:-translate-y-1 transition duration-300">
-              <p className="text-gray-300 text-sm">Total Rents</p>
-              <p className="text-white text-2xl font-bold mt-1">
-                {stats?.totalRents ?? 0}
-              </p>
-            </div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-400">Loading user data...</p>
-        )}
-
-        {!stats ? (
-          <p className="text-center text-gray-400 mt-10">Loading stats...</p>
-        ) : stats?.monthlyRents?.length > 0 ? (
-          <div className="bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg p-8">
-            <h3 className="text-2xl font-semibold mb-6 text-center">
-              Rental Statistics
-            </h3>
-            <div className="h-72">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={stats.monthlyRents}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#4b5563" />
-                  <XAxis dataKey="month" stroke="#d1d5db" />
-                  <YAxis stroke="#d1d5db" />
-                  <Tooltip
-                    contentStyle={{
-                      backgroundColor: "#111827",
-                      borderRadius: "8px",
-                      color: "#fff",
-                      border: "1px solid #374151",
-                    }}
-                  />
-                  <Bar dataKey="count" fill="#ffffff" radius={[8, 8, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        ) : (
-          <p className="text-center text-gray-400 mt-10">
-            No rentals found yet.
+        {loading ? (
+          <p className="text-center text-gray-400 text-lg">Loading...</p>
+        ) : rentals.length === 0 ? (
+          <p className="text-center text-gray-400 text-lg">
+            You haven't rented any cars yet.
           </p>
+        ) : (
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            {rentals.map((rental) => (
+              <div
+                key={rental.id}
+                className="bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden flex flex-col transform hover:-translate-y-2 hover:scale-[1.02]"
+              >
+                <div className="relative">
+                  <img
+                    src={
+                      rental.cars?.image ||
+                      "https://via.placeholder.com/400x250?text=No+Image"
+                    }
+                    alt={rental.cars?.model}
+                    className="w-full h-52 object-cover"
+                  />
+                  <span className="absolute top-2 right-2 bg-white text-black text-xs font-bold px-3 py-1 rounded-full shadow">
+                    {rental.cars?.year}
+                  </span>
+                </div>
+
+                <div className="p-5 flex flex-col flex-grow text-white">
+                  <h2 className="text-xl font-bold mb-1">
+                    {rental.cars?.brand} {rental.cars?.model}
+                  </h2>
+                  
+
+                  <div className="mt-auto">
+                    <p className="font-bold text-white text-lg mb-1">
+                      {rental.cars?.price_day} EGP/day
+                    </p>
+                    <p className="text-gray-300 text-sm">
+                      <strong>Total:</strong> {rental.total_price} EGP
+                    </p>
+                    <p className="text-gray-400 text-sm mt-2">
+                      {rental.start_date} → {rental.end_date}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         )}
 
-        <div className="mt-10 text-center">
+        <div className="text-center mt-10">
           <Link
             to="/cars"
-            className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-semibold py-3 px-10 rounded-full shadow hover:scale-105 transition duration-300"
+            className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold px-6 py-3 rounded-full shadow hover:scale-105 transition duration-300"
           >
-            Browse Cars
+            + Rent New Car
           </Link>
         </div>
       </div>
