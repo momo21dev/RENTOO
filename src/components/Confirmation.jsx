@@ -66,8 +66,8 @@ export default function Confirmation() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex items-center justify-center p-6">
-      <div className="bg-gray-800 p-8 rounded-2xl shadow-lg max-w-md w-full">
+    <div className="min-h-screen bg-white flex items-center justify-center p-6">
+      <div className="bg-[#FA4226] p-8 rounded-2xl shadow-lg max-w-md w-full">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
           confirm car rental
         </h1>
@@ -77,40 +77,40 @@ export default function Confirmation() {
             <p className="text-gray-300 mb-2 text-center">
               <span className="font-bold text-white">{car.brand} {car.model}</span> ({car.year})
             </p>
-            <p className="text-center text-blue-400 font-semibold mb-6">
+            <p className="text-center text-black font-semibold mb-6">
               Daily Price ${car.price_day}
             </p>
 
             <form onSubmit={handleConfirm} className="space-y-4">
               <div>
-                <label className="block text-gray-300 mb-2">start date</label>
+                <label className="block text-black mb-2">start date</label>
                 <input
                   type="date"
-                  className="w-full p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 rounded-lg bg-white text-black "
                   value={startDate}
                   onChange={(e) => setStartDate(e.target.value)}
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 mb-2">end date</label>
+                <label className="block text-black mb-2">end date</label>
                 <input
                   type="date"
-                  className="w-full p-2 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full p-2 rounded-lg bg-white text-black"
                   value={endDate}
                   onChange={(e) => setEndDate(e.target.value)}
                 />
               </div>
 
               {totalPrice > 0 && (
-                <p className="text-center text-green-400 font-bold">
+                <p className="text-center text-black ">
                   total price: ${totalPrice}
                 </p>
               )}
 
               <button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md transition duration-300"
+                className="w-full bg-black text-white font-semibold py-3 rounded-lg shadow-md transition duration-300"
               >
                 confirm
               </button>

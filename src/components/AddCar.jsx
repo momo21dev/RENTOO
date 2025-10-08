@@ -47,18 +47,18 @@ export default function AddCar() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col items-center">
+        <div className="min-h-screen bg-white flex flex-col items-center">
 
-            <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center w-full sticky top-0 z-50">
+            <nav className="bg-white backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center w-full sticky top-0 z-50">
                 <Link to={"/cars"}>
-                    <h1 className="text-3xl font-extrabold text-white tracking-wide">
+                    <h1 className="text-3xl font-extrabold text-black tracking-wide">
                         RENTOO
                     </h1>
                 </Link>
             </nav>
 
 
-            <div className="w-full max-w-lg mt-10 p-8 bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg">
+            <div className="w-full max-w-lg mt-10 p-8 bg-[#FA4226] rounded-2xl shadow-lg">
                 <h2 className="text-3xl font-bold text-center text-white mb-6">
                     Add New Car
                 </h2>
@@ -72,7 +72,7 @@ export default function AddCar() {
                         placeholder="Brand"
                         value={brand}
                         onChange={(e) => setBrand(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg"
                     />
 
                     <input
@@ -80,7 +80,7 @@ export default function AddCar() {
                         placeholder="Model"
                         value={model}
                         onChange={(e) => setModel(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg "
                     />
 
                     <input
@@ -88,7 +88,7 @@ export default function AddCar() {
                         placeholder="Year"
                         value={year}
                         onChange={(e) => setYear(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg "
                     />
 
                     <input
@@ -96,7 +96,7 @@ export default function AddCar() {
                         placeholder="Price per day"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg "
                     />
 
                     <input
@@ -104,19 +104,19 @@ export default function AddCar() {
                         placeholder="Image URL"
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg "
                     />
 
                     <textarea
                         placeholder="Description"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="bg-gray-900 border border-gray-700 text-white p-3 rounded-lg h-24 focus:ring-2 focus:ring-yellow-400 outline-none"
+                        className="bg-white text-black p-3 rounded-lg h-24 "
                     ></textarea>
 
                     <button
                         type="submit"
-                        className="bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-bold py-3 rounded-full shadow hover:scale-105 transition duration-300"
+                        className="bg-black text-white font-bold py-3 rounded-2xl hover:bg-white hover:text-gray-700 shadow hover:scale-105 transition duration-300"
                     >
                         Add Car
                     </button>
@@ -136,7 +136,7 @@ export default function AddCar() {
             <div className="mt-8 mb-10">
                 <Link
                     to="/cars"
-                    className="bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold py-3 px-8 rounded-full shadow hover:scale-105 transition duration-300"
+                    className="bg-black hover:bg-[#FA4226] text-white font-semibold py-3 px-8 rounded-full shadow hover:scale-105 transition duration-300"
                 >
                     Back to Cars
                 </Link>

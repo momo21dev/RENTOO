@@ -48,26 +48,26 @@ export default function Cars() {
   const isAdmin = user?.role === "ADMIN";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
 
 
-      <nav className="bg-black/90 backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
+      <nav className="bg-white backdrop-blur-md shadow-md px-4 sm:px-6 py-4 flex flex-wrap justify-between items-center sticky top-0 z-50">
         <Link to={"/cars"}>
-          <h1 className="text-3xl font-extrabold text-white tracking-wide">
+          <h1 className="text-3xl font-extrabold text-black tracking-wide">
             RENTOO
           </h1>
         </Link>
 
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 mt-3 sm:mt-0">
           <Link to="/dashboard">
-            <div className="bg-gradient-to-r from-blue-800 to-blue-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
+            <div className="bg-[#FA4226] text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:shadow-lg hover:scale-105 transition duration-300">
               {user ? `${user.firstName}` : "Guest"}
             </div>
           </Link>
 
           {isAdmin && (
             <Link to={"/addcar"}>
-              <button className="bg-gradient-to-r from-green-600 to-green-400 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:scale-105 transition duration-300">
+              <button className="bg-green-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:scale-105 transition duration-300">
                 ADD CAR
               </button>
             </Link>
@@ -76,7 +76,7 @@ export default function Cars() {
           <Link to={"/login"}>
             <button
               onClick={handleLogOut}
-              className="bg-gradient-to-r from-red-600 to-red-400 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:scale-105 transition duration-300"
+              className="bg-red-600 text-white font-semibold px-4 sm:px-5 py-2 rounded-full shadow hover:scale-105 transition duration-300"
             >
               LOGOUT
             </button>
@@ -86,7 +86,7 @@ export default function Cars() {
 
 
       <div className="flex-grow p-4 sm:p-8">
-        <h2 className="text-4xl font-extrabold mb-10 text-center text-white drop-shadow-lg">
+        <h2 className="text-4xl font-extrabold mb-10 text-center text-black drop-shadow-lg">
           Available Cars
         </h2>
 
@@ -95,7 +95,7 @@ export default function Cars() {
           {data.map((car) => (
             <div
               key={car.id}
-              className="bg-gradient-to-b from-gray-800 to-gray-700 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden flex flex-col transform hover:-translate-y-2 hover:scale-[1.02]"
+              className=" bg-[#FA4226] rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 overflow-hidden flex flex-col transform hover:-translate-y-2 hover:scale-[1.02]"
             >
               <div className="relative">
                 <img
@@ -109,28 +109,28 @@ export default function Cars() {
               </div>
 
               <div className="p-5 flex flex-col flex-grow">
-                <h2 className="text-xl font-bold text-white mb-1">
+                <h2 className="text-xl font-bold text-black mb-1">
                   {car.brand} {car.model}
                 </h2>
-                <p className="text-gray-300 text-sm mb-3 flex-grow line-clamp-3">
+                <p className="text-gray-700 text-sm mb-3 flex-grow line-clamp-3">
                   {car.description}
                 </p>
 
                 <div className="flex items-center justify-between gap-2 mt-auto">
-                  <p className="font-bold text-white text-lg">
+                  <p className="font-bold text-black text-lg">
                     ${car.price_day}/day
                   </p>
 
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleRent(car.id)}
-                      className="bg-blue-700 hover:bg-blue-800 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300">
+                      className="bg-black text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300">
                       RENT
                     </button>
                     {isAdmin && (
                       <button
                         onClick={() => deleteCar(car.id)}
-                        className="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300"
+                        className="bg-red-800 text-white font-semibold px-4 py-2 rounded-lg shadow transition duration-300"
                       >
                         DELETE
                       </button>
